@@ -53,13 +53,26 @@ nav a{
 
 footer{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content:space-between;
+    align-items:center;
     background: linear-gradient(to right, rgb(134, 5, 240), rgba(38, 2, 78, 0.911));
     padding: 10px;
     font-size: 30px;
     color: #00f7ff;
-    font-weight: 500;
+    font-weight: 200;
+}
+
+.social-link{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+}
+
+.social-link a:hover{
+    box-shadow: 0 0px 10px  #00f7ff;
 }
 
 .home-section{
