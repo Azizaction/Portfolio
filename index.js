@@ -20,6 +20,14 @@ app.get('/', async (request, response) => {
 
 })
 
+app.get('/About', async (request, response) => {
+    response.render('About',{
+        title: 'About Me',
+        style: ['CSS/style.css'],
+        layout: 'body',
+        scripts: ['JS/about.js']
+    })
+})
 
 console.log('Server Ready.');
 console.log('http://localhost:' + process.env.PORT);

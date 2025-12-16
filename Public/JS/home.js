@@ -38,8 +38,6 @@ Bien évidemment la suite du site sera en anglais, pour des raisons de clarté e
     let i = 0
 
   function SpaceChar(){
-    console.log(LengthText)
-    console.log(i)
         setTimeout(()=> {
           if (lang.slice(i, i+4) === "<br>") {
             const br = document.createElement("br")
@@ -56,13 +54,12 @@ Bien évidemment la suite du site sera en anglais, pour des raisons de clarté e
           if ( i == LengthText ) {
             text_cursor.style.animation = "none"
             text_cursor.style.opacity = "0"
-            console.log("top")
             i = 0
             return 
           }
           
           if (i < LengthText) SpaceChar()
-          },8)
+          },5)
         
         }
     SpaceChar()
