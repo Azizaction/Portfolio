@@ -180,3 +180,38 @@ footer{
     margin-bottom: auto;
 
 }
+
+.para-work, .para-me{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
+    
+}
+
+.para-work p, .para-me p{
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: fit-content;
+    padding: 15px;
+    font-size: 23px;
+    font-weight: 200;
+    color: #00f7ff;
+    line-height: 1.5em;
+    font-family: "Inter", system-ui, serif;
+    margin-right: auto;
+    margin: 20px;
+}
+
+img{
+    width: 40%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    margin: 10px;
+    border-radius: 20px;
+
+
+}
