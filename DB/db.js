@@ -9,7 +9,7 @@ async function CreateDataBase(connexion) {
         
         CREATE TABLE users(
             id_user INTEGER PRIMARY KEY,
-            name-user TEXT PRIMARY KEY,
+            name_user TEXT,
             email_user TEXT NOT NULL,
             password_user TEXT NOT NULL
         );
@@ -30,7 +30,7 @@ async function CreateDataBase(connexion) {
             text_review TEXT NOT NULL,
             nb_review INEGER NOT NULL,
             FOREIGN KEY(id_project) REFERENCES projects(id_project),
-            FOREIGN KEY(id_user) RFERENCES users(id_user)
+            FOREIGN KEY(id_user) REFERENCES users(id_user)
         );
         
         CREATE TABLE comments(

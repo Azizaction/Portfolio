@@ -8,6 +8,8 @@ import session from 'express-session'
 import passport from 'passport'
 import { RedisStore } from 'connect-redis'
 import { createClient } from 'redis'
+import { GetUserbyID } from './Models/User.js'
+import './authentification.js'
 
 const app = express();
 
