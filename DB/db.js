@@ -13,7 +13,7 @@ async function CreateDataBase(connexion) {
             email_user TEXT NOT NULL,
             password_user TEXT NOT NULL
         );
-            
+        
         CREATE TABLE projects(
             id_project INTEGER PRIMARY KEY,
             name_project TEXT NOT NULL,
@@ -22,8 +22,7 @@ async function CreateDataBase(connexion) {
             update_project TEXT NOT NULL,
             score_project INTEGER NOT NULL
         );
-                
-                
+        
         CREATE TABLE reviews(
             id_review INTEGER PRIMARY KEY,
             id_user INTEGER,
@@ -33,7 +32,7 @@ async function CreateDataBase(connexion) {
             FOREIGN KEY(id_project) REFERENCES projects(id_project),
             FOREIGN KEY(id_user) RFERENCES users(id_user)
         );
-                    
+        
         CREATE TABLE comments(
             id_comment INTEGER PRIMARY KEY,
             id_user INTEGER,
