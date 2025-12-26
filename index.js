@@ -46,8 +46,16 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
-
 app.use(express.static('Public'))
+
+function UserConnected(request, response, next){
+    if(!request.user){
+        response.status(401).end()
+        return 
+    }
+    next()
+}
+
 app.get('/', async (request, response) => {
     response.render('home', {
         title: 'Home',

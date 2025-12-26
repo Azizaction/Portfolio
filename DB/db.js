@@ -20,7 +20,8 @@ async function CreateDataBase(connexion) {
             dsc_project TEXT NOT NULL,
             state_project TEXT NOT NULL,
             update_project TEXT NOT NULL,
-            score_project INTEGER NOT NULL
+            score_project INTEGER NOT NULL,
+            type_project TEXT NOT NULL
         );
         
         CREATE TABLE reviews(
@@ -28,7 +29,7 @@ async function CreateDataBase(connexion) {
             id_user INTEGER,
             id_project INTEGER,
             text_review TEXT NOT NULL,
-            nb_review INEGER NOT NULL,
+            score_review INEGER NOT NULL,
             FOREIGN KEY(id_project) REFERENCES projects(id_project),
             FOREIGN KEY(id_user) REFERENCES users(id_user)
         );
@@ -56,6 +57,13 @@ async function CreateDataBase(connexion) {
             like_state INEGER,
             FOREIGN KEY (id_user) REFERENCES users (id_user),
             FOREIGN KEY (id_review) REFERENCES reviews (id_review)            
+        );
+
+        CREATE TABLE users_logs(
+            id_log INTEGER PRIMARY KEY,
+            id_user INTEGER,
+            date_log TEXT NOT NULL,
+            time_log TEXT NOT NULL
         );
         
     `)
