@@ -11,6 +11,7 @@ import { createClient } from 'redis'
 import { GetUserbyID } from './Models/User.js'
 import './authentification.js'
 
+
 const app = express();
 
 app.use(helmet())
@@ -56,6 +57,14 @@ function UserConnected(request, response, next){
     next()
 }
 
+function UserNotConnected(request, response, next){
+    if(request.user){
+        response.status(401)>end()
+        return
+    }
+    next()
+}
+
 app.get('/', async (request, response) => {
     response.render('home', {
         title: 'Home',
@@ -71,6 +80,15 @@ app.get('/About', async (request, response) => {
         style: ['CSS/style.css'],
         layout: 'body',
         scripts: ['JS/about.js']
+    })
+})
+
+app.get('/Signin', UserNotConnected, async(request, response)=>{
+    response.render('Signin',{
+        title: 'Sign-in',
+        style: ['CSS/sign.css'],
+        layout: 'sign',
+        scripts: ['JS/home.js']
     })
 })
 

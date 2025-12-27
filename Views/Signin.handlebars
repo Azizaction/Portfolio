@@ -1,0 +1,21 @@
+<section class="sign-section">
+    <div class="sign-container">
+        <h1>Connexion</h1>
+        <form action="/api/connexion" method="post" id="sign-in-form">
+        <div class="form-input">
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Your email" id="email-sign-in" required>
+        </div>
+
+        <div class="form-input">
+            <label for="password">Password</label>
+            <div class="form-pswd-input">
+                <input type="password" name="password" placeholder="Your password" id="pswd-sign-in" required>
+                <button type="button" id="opt-display" aria-label="show or hide">👁️</button>
+            </div>
+        </div>
+        <button type="submit" id="btn-sign-in">Connexion</button>
+        </form>
+        <span>You don't have an account? Please <a href="/Signup" class="btn-ber-sign-up">Sign-up</a></span>
+    </div>
+</section>
