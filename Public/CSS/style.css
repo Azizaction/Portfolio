@@ -19,11 +19,12 @@ main{
 }
 header{
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background: linear-gradient(to right, rgb(134, 5, 240), rgba(38, 2, 78, 0.911));
     padding: 10px;
 }
+
+
 .Logo-Text img{
     height: 100px;
     width: 150px;
@@ -31,6 +32,9 @@ header{
 }
 
 nav{
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
     flex: 1;
     padding: 20px;
 }
@@ -39,8 +43,7 @@ nav ul{
     display: flex;
     justify-content:space-between;
     align-items: center;
-    flex-wrap: 1;
-    gap: 24px;
+    flex-grow: 1;
     list-style: none;
 }
 
@@ -50,6 +53,27 @@ nav a{
     color: #00f7ff;
     font-weight: 500;
     font-family: "Inter", system-ui, serif;
+}
+
+.sign-btn-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.sign-btn-header a{
+    background: linear-gradient(to right, rgba(142, 2, 235, 0.671), rgba(55, 2, 153, 0.664));
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    color: #00f7ff;
+    font-size: 15px;
+    font-family: "Inter", system-ui, serif;
+    font-weight: 600;
+    padding: 5px 15px;
+    width: auto;
 }
 
 footer{

@@ -78,7 +78,6 @@ app.get('/About', async (request, response) => {
     response.render('About',{
         title: 'About Me',
         style: ['CSS/style.css'],
-        layout: 'body',
         scripts: ['JS/about.js']
     })
 })
@@ -88,7 +87,7 @@ app.get('/Signin', UserNotConnected, async(request, response)=>{
         title: 'Sign-in',
         style: ['CSS/sign.css'],
         layout: 'sign',
-        scripts: ['JS/home.js']
+        scripts: ['JS/signin.js']
     })
 })
 
