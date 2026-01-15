@@ -1,3 +1,4 @@
+import { response } from "express"
 
 const form = document.getElementById('sign-in-form')
 const email = document.getElementById('email-sign-in')
@@ -37,6 +38,47 @@ function Valideform (user_pswd, user_email){
         return false
     }
     if(!user_pswd){
-        err.innerText = 'Plese enter an password'
+        err.innerText = 'Please enter an password'
+        return false
+    }
+    if(!ValideEmail(user_email)){
+        err.innerText = 'Please enter a valide email'
+        return false
+    }
+
+    return true
+}
+
+async function connexion (event){
+    event.preventDefault();
+
+    if(!Valideform(pswd.value, email.value)){
+        return
+    }
+
+    const data = {
+        email_user: email.value,
+        password_user: pswd.value
+    };
+
+    const reponse = await fetch ('/api/connexion', {
+        method: 'POST',
+        headers: { 'content-Type' : 'application/JSON' },
+        body: JSON.stringify(data)
+    })
+
+    if (response.ok){
+        location.replace('/')
+    }
+    else if (response.status === 401){
+        const message = await response.json()
+        if (message.error === 'Wrong email'){
+            err.innerText = 'There\'s no user under this email'
+        }
+        if ( message.error === 'Wrong password'){
+            err.innerText = 'Wrong password'
+        }
     }
 }
+
+form.addEventListener( 'submit', connexion)
