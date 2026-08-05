@@ -1,4 +1,3 @@
-import { response } from "express"
 
 const form = document.getElementById('sign-in-form')
 const email = document.getElementById('email-sign-in')
@@ -19,7 +18,7 @@ function ValideEmalFormat(user_email){
 }
 
 function ValideEmail(user_email){
-    if (user_email.length()> 6 || user_email.length() < 254){
+    if (user_email.length<6 || user_email.length > 254){
         return {ok: false, user_email, info: 'invalide length'}
     }
     if(!ValideEmalFormat(user_email)){
@@ -29,11 +28,11 @@ function ValideEmail(user_email){
 }
 
 function Valideform (user_pswd, user_email){
-    if(!user_pswd.value && !user_email.value){
+    if(!user_pswd && !user_email){
         err.innerText = 'Please fill all the fields'
         return false
     }
-    if(!user_email.value){
+    if(!user_email){
         err.innerText = 'Please enter an email'
         return false
     }
@@ -41,8 +40,8 @@ function Valideform (user_pswd, user_email){
         err.innerText = 'Please enter an password'
         return false
     }
-    if(!ValideEmail(user_email)){
-        err.innerText = 'Please enter a valide email'
+    if(ValideEmail(user_email).ok === false){
+        err.textContent = 'Please enter a valide email'
         return false
     }
 
@@ -52,20 +51,23 @@ function Valideform (user_pswd, user_email){
 async function connexion (event){
     event.preventDefault();
 
+    
     if(!Valideform(pswd.value, email.value)){
-        return
+        return;
     }
-
+    
     const data = {
         email_user: email.value,
         password_user: pswd.value
     };
 
-    const reponse = await fetch ('/api/connexion', {
+    const response = await fetch ('/api/signin', {
         method: 'POST',
         headers: { 'content-Type' : 'application/JSON' },
         body: JSON.stringify(data)
     })
+
+    
 
     if (response.ok){
         location.replace('/')

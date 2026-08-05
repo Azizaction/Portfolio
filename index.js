@@ -91,6 +91,14 @@ app.get('/Signin', UserNotConnected, async(request, response)=>{
     })
 })
 
+app.get('/Signup', UserNotConnected, async(request, response)=>{
+    response.render('Signup',{
+        title: 'Sign-up',
+        style: ['CSS/Sign.css'],
+        layout:'sign'
+    })
+})
+
 console.log('Server Ready.');
 console.log('http://localhost:' + process.env.PORT);
 app.listen(process.env.PORT);
