@@ -5,14 +5,20 @@
         <div class="form-input">
             <label for="username">User Name</label>
             <input type="text" name="username" placeholder="Enter a username" autocomplete="off" id="username-sign-up" required>
+            <div class="form-msg" id="username-msg-info"></div>
         </div>
         <div class="form-input">
             <label for="email">Email</label>
             <input type="email" name="email" placeholder="Enter a valid email" autocomplete="off" id="email-sign-up" required>
+            <div class="form-msg" id="email-msg-info"></div>
         </div>
         <div class="form-input">
             <label for="password">Password</label>
-            <input type="pasword" name="password" placeholder="Enter a password" id="pswd-sign-up" required>
+            <div class="form-pswd-input">
+            <input type="password" name="password" value="" placeholder="Enter a password" id="pswd-sign-up" required>
+            <button type="button" id="opt-display" aria-label="show or hide">👁️</button>
+            </div>
+            <div class="form-msg" id="pswd-msg-info"></div>
         </div>
 
         <p class="rule" id="rule-1">must contains at least 8 characters</p>
@@ -22,10 +28,13 @@
         <div class="form-input">
             <label for="confirm-pswd">Confirm Password</label>
             <div class="form-pswd-input">
-            <input type="password" name="confirm-pswd" placeholder="Confirm your password" id="confirm-pswd-sign-up" required>
-            <button type="button" id="opt-display" aria-label="show or hide">👁️</button>
+            <input type="password" name="confirm-pswd" placeholder="Confirm your password" value="" id="confirm-pswd-sign-up" required>
+            <button type="button" id="confirm-opt-display" aria-label="show or hide">👁️</button>
             </div>
+            <div class="form-msg" id="confirm-pswd-msg-info"></div>
         </div>
+        <button type="submit" class="btn-sign" id="btn-sign-up">Sign up</button>
         </form>
+        <span>You already have an account?<a href="/Signin" class="btn-ber-sign-in">Sign in</a></span>
     </div>
 </section>

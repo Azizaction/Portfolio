@@ -1,23 +1,118 @@
+<!-- 
+=========================================
+Component: Signin
+Author: Mehdi Drouan
+Description:
+   Displays the sign in form used by existing 
+   users to log in to their account.
+Features:
+    - Form validation
+    - Password visibility toggle
+    - Error message display
+    - Validation client-side and server-side
+
+EndPoints:
+    - POST /api/signin
+
+Note:
+    - The native browser validation is disblaed 
+    to use custom valition to provide a better 
+    user experience more clean and clear.
+ ============================================   
+--->
+
 <section class="sign-section">
+
+    <!-- Main container for the sign in form -->
+    
     <div class="sign-container">
+
         <h1>Hi welcome back, please <br>sign in</h1>
+
+        <!-- Sign in form 
+
+             The form handle the authentication of existing user by
+             sending the entered email and password to the serer 
+             using the POST method to the endpoint /api/signin.
+
+             The form relies on custom validation before the request 
+             is processed to the backend.
+
+        -->
+
         <form action="/api/signin" method="post" id="sign-in-form" novalidate >
+
+            <!-- ============ Email ============ -->
             <div class="form-input">
+
                 <label for="email">Email</label>
-                <input type="email" name="email" placeholder="Your email" autocomplete="off" id="email-sign-in"
-                    required>
+
+                <!-- Email input
+                     
+                     The browser autocompete is disabled to provide a
+                     consitent user experience.
+
+                 -->
+
+                <input type="email" name="email" placeholder="Your email" autocomplete="off" id="email-sign-in"required>
+
             </div>
 
+            <!-- ============ Password ============ -->
             <div class="form-input">
+
                 <label for="password">Password</label>
+
                 <div class="form-pswd-input">
+
+                    <!-- Password input
+                         
+                         The password visibility can be toggled by 
+                         clicking on the eye icon button next to the 
+                         input field.
+
+                     -->
+
                     <input type="password" name="password" placeholder="Your password" id="pswd-sign-in" required>
+
+                    <!-- Toggle button
+                         
+                         Toogles the visbility of the password field.
+
+                         Type="button" is used to prevent the form from
+                         being submitted when the button is clicked.
+                      -->
+
                     <button type="button" id="opt-display" aria-label="show or hide">👁️</button>
+                    
                 </div>
+
+                <!-- Error message container
+                     
+                     Displays the validation error or the authentication
+                     error.
+
+                     the error message is dinamicly updated by the 
+                     client-side validation script or the server response.
+
+                 -->
                 <div id="sign-in-error-msg"></div>
+
             </div>
-            <button type="submit" id="btn-sign-in">Sign in</button>
+            <!-- Submit button 
+                
+                Submits the ign in form to the server after all the client-side
+                validation is passed.
+
+            -->
+
+            <button type="submit" class="btn-sign" id="btn-sign-in">Sign in</button>
+        
         </form>
-        <span>You don't have an account? Please <a href="/Signup" class="btn-ber-sign-up">Sign-up</a></span>
+        <!--  Link to redirect the users who don't have an account to the Signup page -->
+
+        <span>You don't have an account?<a href="/Signup" class="btn-ber-sign-up">Sign-up</a></span>
+    
     </div>
+
 </section>

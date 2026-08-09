@@ -32,7 +32,7 @@ body{
     text-align: center;
     font-family: "Inter", system-ui, serif;
     font-size: 40px;
-    font-weight: 600;
+    font-weight: 400;
     color: #00f7ff;
 }
 
@@ -52,7 +52,7 @@ body{
     color: #00f7ff;
 }
 
-#sign-in-form{
+#sign-in-form, #sign-up-form{
     padding: 10 px;
     display: flex;
     flex-direction: column;
@@ -92,7 +92,7 @@ body{
     align-items: center;
 }
 
-#opt-display{
+#opt-display, #confirm-opt-display{
     position: absolute;
     background: transparent;
     right: 5px;
@@ -103,7 +103,7 @@ body{
     will-change: transform;
 }
 
-#btn-sign-in{
+.btn-sign{
     background: linear-gradient(to right, rgba(142, 2, 235, 0.671), rgba(55, 2, 153, 0.664));
     text-align: center;
     border-radius: 12px;
@@ -129,4 +129,19 @@ body{
 .form-input input:focus{
     outline: none;
     box-shadow: 0 12px 30px #00f7ff;
+}
+
+.rule{
+    color: red
+}
+
+.rule.valid{
+    color: green;
+}
+
+.form-msg{
+    color: red;
+    font-family: "Inter", system-ui, serif;
+    font-weight: 400;
+    margin-top: 5px;
 }

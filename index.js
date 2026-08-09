@@ -95,7 +95,8 @@ app.get('/Signup', UserNotConnected, async(request, response)=>{
     response.render('Signup',{
         title: 'Sign-up',
         style: ['CSS/Sign.css'],
-        layout:'sign'
+        layout:'sign',
+        scripts: ['JS/signup.js']
     })
 })
 
