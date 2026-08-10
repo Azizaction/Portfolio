@@ -9,7 +9,8 @@ import passport from 'passport'
 import { RedisStore } from 'connect-redis'
 import { createClient } from 'redis'
 import { GetUserbyID } from './Models/User.js'
-import './authentification.js'
+import './auth/authentification.js'
+import { ValideUsername } from './utils/FilterUser.js'
 
 
 const app = express();
@@ -59,7 +60,7 @@ function UserConnected(request, response, next){
 
 function UserNotConnected(request, response, next){
     if(request.user){
-        response.status(401)>end()
+        response.status(401).end()
         return
     }
     next()
@@ -98,6 +99,18 @@ app.get('/Signup', UserNotConnected, async(request, response)=>{
         layout:'sign',
         scripts: ['JS/signup.js']
     })
+})
+
+app.post('/api/valid-username', UserNotConnected, async(request, response)=>{
+
+    const username = request.body.username
+    const isValid = await ValideUsername(username)
+
+    if(isValid){
+        response.status(200).json({allowed: true})
+    }else if (!isValid){
+        response.status(400).json({allowed: false})
+    }
 })
 
 console.log('Server Ready.');

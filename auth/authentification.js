@@ -1,7 +1,7 @@
 import { compare } from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { GetUserbyID, GetUserbyEmail } from "./Models/User.js";
+import { GetUserbyID, GetUserbyEmail } from "../Models/User.js";
 
 const config = {
     usernameField: 'email_user',

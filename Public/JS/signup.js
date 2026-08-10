@@ -10,8 +10,59 @@ const email_msg_info = document.getElementById('email-msg-info')
 const pswd_msg_info = document.getElementById('pswd-msg-info')
 const confirm_pswd_msg_info = document.getElementById('confirm-pswd-msg-info')
 
-pswd.value = ""
-confirm_pswd.value = ""
+let UserNameTimer;
+
+
+username.addEventListener('input', function(){
+    const username_value = this.value.trim()
+    const rule1 = username_value.length > 3
+    const rule2 = /[!%^&*(),*+=|\';:?":{}|<>]/.test(username_value)
+
+    clearTimeout(UserNameTimer)
+
+    UserNameTimer = setTimeout(async function(){
+
+        
+    if(!username_value){
+        username_msg_info.textContent = ''
+        return
+    }
+    const response = await fetch('/api/valid-username',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username: username_value})
+    })
+
+    const result = await response.json()
+
+    if (result.allowed && rule1 && !rule2){
+        username_msg_info.textContent = '✓ This username is available and valid'
+        username_msg_info.style.color = 'green'
+    }else if (!result.allowed && rule1 && !rule2){
+        username_msg_info.textContent = '✕ This username can not be used as username. Please choose another one'
+        username_msg_info.style.color = 'red'
+    }else if (!rule1){
+        username_msg_info.textContent = '✕ The username must be at least 4 characters long'
+        username_msg_info.style.color = 'red'
+    }else if (rule2){
+        username_msg_info.textContent = '✕ The only special characters allowed are: _ - . @ # $'
+        username_msg_info.style.color = 'red'
+    }
+    },500)
+
+
+    if (!rule1){
+        username_msg_info.textContent = '✕ The username must be at least 4 characters long'
+        username_msg_info.style.color = 'red'
+    }else if (rule2){
+        username_msg_info.textContent = '✕ The only special characters allowed are: _ - . @ # $'
+        username_msg_info.style.color = 'red'
+        username_msg_info.textContent = '✕ This username can not be used as username. Please choose another one'
+        username_msg_info.style.color = 'red'
+    }
+
+})
+
 
 pswd.addEventListener( 'input', function(){
     const pswd_value = this.value 
@@ -23,22 +74,21 @@ pswd.addEventListener( 'input', function(){
     document.getElementById('rule-1').classList.toggle('valid', rule1)
     document.getElementById('rule-2').classList.toggle('valid', rule2)
     document.getElementById('rule-3').classList.toggle('valid', rule3)
-})
+});
+
 [confirm_pswd, pswd].forEach(function(element) {
     element.addEventListener('input', function(){
-    if(this.value === pswd.value){
-        confirm_pswd_msg_info.textContent = '✓ Password match'
+    if(confirm_pswd.value === pswd.value){
+        confirm_pswd_msg_info.textContent = '✓ The password match'
         confirm_pswd_msg_info.style.color = 'green'
-    }else if(this.value === ''){
+    }else if(confirm_pswd.value === ''){
         confirm_pswd_msg_info.textContent = ''
     }else{
-        confirm_pswd_msg_info.textContent = '✕ Password does not match'
+        confirm_pswd_msg_info.textContent = '✕ The password does not match'
+        confirm_pswd_msg_info.style.color = 'red'
     }
-
-})
-})
-
-
+    })
+})  
 
 pswd_display.addEventListener('click', function() {
     const TypeNew = pswd.type === 'password'? 'text': 'password'
