@@ -1,8 +1,7 @@
-import { Filter } from 'bad-words'
+import { GetBannedWords, AddBannedWords } from "../Models/Filter.js"
 
-const filter = new Filter()
-
-
+const banned_words = await GetBannedWords()
+const bw_list = banned_words.map(bw => bw.bw_word)
 function FormFilter(username){
 
     const n_version = username.toLowerCase().replace(/[_.#@$-]/g, '').trim()
@@ -21,19 +20,21 @@ function FormFilter(username){
 export async function ValideUsername(username){
     if (!username){
         return false
-    }else if (filter.isProfane(username)){
+    }else if (bw_list.includes(username)){
         return false
     }
 
-    FormFilter(username).forEach(function (version){
-        if (filter.isProfane(version)){
-            if (!filter.isProfane(username)){
-                filter.addWords(username)
-            }
-            return false
-        }     
+    const versions = FormFilter(username)
+
+    const invalid = versions.some(function(version){
+        return bw_list.includes(version)
     })
 
+    if(invalid){
+        bw_list.push(username)
+        AddBannedWords(username)
+        return false
+    }
     return true
 
 }

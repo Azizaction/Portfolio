@@ -19,10 +19,10 @@ function ValideEmalFormat(user_email){
 
 function ValideEmail(user_email){
     if (user_email.length<6 || user_email.length > 254){
-        return {ok: false, user_email, info: 'invalide length'}
+        return {ok: false,  info: 'invalide length'}
     }
     if(!ValideEmalFormat(user_email)){
-        return {ok: false, user_email, info: 'invalide format'}
+        return {ok: false, info: 'invalide format'}
     }
     return {ok: true, user_email, info: 'valide email'}
 }

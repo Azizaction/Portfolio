@@ -11,7 +11,8 @@ import { createClient } from 'redis'
 import { GetUserbyID } from './Models/User.js'
 import './auth/authentification.js'
 import { ValideUsername } from './utils/FilterUser.js'
-
+import { VerifyUserName, VerifyUserEmail } from './Models/Filter.js'
+import { ValidEmail } from './utils/validation.js'
 
 const app = express();
 
@@ -105,14 +106,35 @@ app.post('/api/valid-username', UserNotConnected, async(request, response)=>{
 
     const username = request.body.username
     const isValid = await ValideUsername(username)
+    const isExist = await VerifyUserName(username)
 
-    if(isValid){
-        response.status(200).json({allowed: true})
-    }else if (!isValid){
-        response.status(400).json({allowed: false})
+    if(isValid && isExist){
+        response.status(400).json({allowed: true, exist: true})
+    }else if (!isValid && !isExist){
+        response.status(400).json({allowed: false, exiist: false})
+    }else if(!isValid && isExist){
+        response.status(400).json({allowed: false, exist: true})
+    }else if(isValid && !isExist){
+        response.status(200).json({allowed: true, exist: false})
     }
 })
 
+app.post('/api/valid-email', UserNotConnected, async(request, response)=>{
+    const email = request.body.email
+    const isValid = await ValidEmail(email)
+    const isExist = await VerifyUserEmail(email)
+
+    if(isValid && isExist){
+        response.status(400).json({allowed: true, exist: true})
+    }else if (!isValid && !isExist){
+        response.status(400).json({allowed: false, exiist: false})
+    }else if(!isValid && isExist){
+        response.status(400).json({allowed: false, exist: true})
+    }else if(isValid && !isExist){
+        response.status(200).json({allowed: true, exist: false})
+    }
+
+})
 console.log('Server Ready.');
 console.log('http://localhost:' + process.env.PORT);
 app.listen(process.env.PORT);

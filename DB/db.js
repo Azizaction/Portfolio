@@ -1,9 +1,12 @@
 import { existsSync } from 'fs'
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
+import { Filter } from 'bad-words'
 
 const IS_NEW = !existsSync(process.env.DB_FILE)
+const filter = new Filter()
 
+const bad_words = [...new Set(filter.list)];
 async function CreateDataBase(connexion) {
     await connexion.exec(`
         
@@ -65,6 +68,11 @@ async function CreateDataBase(connexion) {
             date_log TEXT NOT NULL,
             time_log TEXT NOT NULL
         );
+
+        CREATE TABLE banned_words(
+            id_bw INTEGER PRIMARY KEY,
+            bw_word TEXT NOT NULL UNIQUE
+        );
         
     `)
 
@@ -78,6 +86,9 @@ let connexion = await open ({
 
 if (IS_NEW){
     connexion = await CreateDataBase(connexion)
+    bad_words.forEach(function(word) {
+        connexion.run('INSERT INTO banned_words (bw_word) VALUES (?)', [word])
+    });
 }
 
 export {connexion}

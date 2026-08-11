@@ -11,10 +11,11 @@ const pswd_msg_info = document.getElementById('pswd-msg-info')
 const confirm_pswd_msg_info = document.getElementById('confirm-pswd-msg-info')
 
 let UserNameTimer;
+let UserEmailTimer;
 
 
 username.addEventListener('input', function(){
-    const username_value = this.value.trim()
+    const username_value = this.value.trim().toLowerCase()
     const rule1 = username_value.length > 3
     const rule2 = /[!%^&*(),*+=|\';:?":{}|<>]/.test(username_value)
 
@@ -35,10 +36,10 @@ username.addEventListener('input', function(){
 
     const result = await response.json()
 
-    if (result.allowed && rule1 && !rule2){
+    if (result.allowed&& result.exist && rule1 && !rule2){
         username_msg_info.textContent = '✓ This username is available and valid'
         username_msg_info.style.color = 'green'
-    }else if (!result.allowed && rule1 && !rule2){
+    }else if (!result.allowed){
         username_msg_info.textContent = '✕ This username can not be used as username. Please choose another one'
         username_msg_info.style.color = 'red'
     }else if (!rule1){
@@ -47,20 +48,50 @@ username.addEventListener('input', function(){
     }else if (rule2){
         username_msg_info.textContent = '✕ The only special characters allowed are: _ - . @ # $'
         username_msg_info.style.color = 'red'
+    }else if(!result.esist){
+        username_msg_info.textContent = '✕ This username is alraedy used by someone else. Please choose another one'
+        username_msg_info.style.color = 'red'   
     }
     },500)
 
+})
 
-    if (!rule1){
-        username_msg_info.textContent = '✕ The username must be at least 4 characters long'
-        username_msg_info.style.color = 'red'
-    }else if (rule2){
-        username_msg_info.textContent = '✕ The only special characters allowed are: _ - . @ # $'
-        username_msg_info.style.color = 'red'
-        username_msg_info.textContent = '✕ This username can not be used as username. Please choose another one'
-        username_msg_info.style.color = 'red'
-    }
+email.addEventListener('input', function(){
 
+    const user_email = this.value.trim().toLowerCase()
+    const rule1 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user_email)
+    const rule2 = user_email.length>4 && user_email.length<255
+
+    clearTimeout(UserEmailTimer)
+
+    UserEmailTimer = setTimeout(async function(){
+
+        if(!user_email){
+            email_msg_info.textContent = ''
+            return
+        }
+
+        const response = await fetch('/api/valid-email',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email: user_email})
+        })
+
+        const result = await response.json()
+
+        if (result.allowed && result.exist && rule1 && rule2){
+        email_msg_info.textContent = '✓ This email is available and valid'
+        email_msg_info.style.color = 'green'
+        }else if (!result.allowed && !rule2){
+        email_msg_info.textContent = '✕ The email must be at least 5 or 254 characters long'
+        email_msg_info.style.color = 'red'
+        }else if (!result.allowed && !rule1){
+        email_msg_info.textContent = '✕ the email must look like this: example@doamain.com '
+        username_msg_info.style.color = 'red'
+        }else if(result.esist){
+        email_msg_info.textContent = '✕ This username is alraedy used by someone else. Please choose another one'
+        email_msg_info.style.color = 'red'}
+    }, 500)
 })
 
 

@@ -117,6 +117,13 @@ body{
     width: auto;
 }
 
+.form-input input{
+    font-size: 15px;
+    color: #00f7ff;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .form-input input:not(:focus):hover{
     transform: translateY(-5px) scale(1.04);
     box-shadow: 0 12px 30px #00f7ff;
