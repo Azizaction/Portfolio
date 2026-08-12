@@ -12,7 +12,8 @@ import { GetUserbyID } from './Models/User.js'
 import './auth/authentification.js'
 import { ValideUsername } from './utils/FilterUser.js'
 import { VerifyUserName, VerifyUserEmail } from './Models/Filter.js'
-import { ValidEmail } from './utils/validation.js'
+import { ValidEmail, ValidUserName, ValidPswd} from './utils/validation.js'
+import { AddUser } from './Models/User.js'
 
 const app = express();
 
@@ -109,31 +110,56 @@ app.post('/api/valid-username', UserNotConnected, async(request, response)=>{
     const isExist = await VerifyUserName(username)
 
     if(isValid && isExist){
-        response.status(400).json({allowed: true, exist: true})
-    }else if (!isValid && !isExist){
+        response.status(409).json({allowed: true, exist: true})
+    }else if (!isValid ){
         response.status(400).json({allowed: false, exiist: false})
-    }else if(!isValid && isExist){
-        response.status(400).json({allowed: false, exist: true})
     }else if(isValid && !isExist){
         response.status(200).json({allowed: true, exist: false})
+    }else{
+        response.status(400).end()
     }
 })
 
 app.post('/api/valid-email', UserNotConnected, async(request, response)=>{
+
     const email = request.body.email
     const isValid = await ValidEmail(email)
     const isExist = await VerifyUserEmail(email)
 
     if(isValid && isExist){
-        response.status(400).json({allowed: true, exist: true})
-    }else if (!isValid && !isExist){
+        response.status(409).json({allowed: true, exist: true})
+    }else if (!isValid ){
         response.status(400).json({allowed: false, exiist: false})
-    }else if(!isValid && isExist){
-        response.status(400).json({allowed: false, exist: true})
     }else if(isValid && !isExist){
         response.status(200).json({allowed: true, exist: false})
-    }
+    }else{
+        response.status(400).end()
+    }   
 
+})
+
+app.post('/api/signup', UserNotConnected, async(request, response, next)=>{
+    const user_name = request.body.user_name
+    const user_email = request.body.user_email
+    const user_pswd = request.body.user_pswd
+
+    const isValid = await ValidEmail(user_email) && await ValidUserName(user_name) && await ValidPswd(user_pswd)
+    const isExist = await VerifyUserEmail(user_email) || await VerifyUserName(user_name)
+
+    if(isExist){
+        response.status(409).end()
+    }else if(!isValid){
+        response.status(400).end()
+    }else if(isValid && !isExist){
+        try{
+            AddUser(user_name, user_email, user_pswd)
+            response.status(201).end()
+        }catch(err){
+            next(err)
+        }
+    }else{
+        response.status(400).end()
+    }
 })
 console.log('Server Ready.');
 console.log('http://localhost:' + process.env.PORT);

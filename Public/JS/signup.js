@@ -36,7 +36,7 @@ username.addEventListener('input', function(){
 
     const result = await response.json()
 
-    if (result.allowed&& result.exist && rule1 && !rule2){
+    if (result.allowed&& !result.exist && rule1 && !rule2){
         username_msg_info.textContent = '✓ This username is available and valid'
         username_msg_info.style.color = 'green'
     }else if (!result.allowed){
@@ -48,7 +48,7 @@ username.addEventListener('input', function(){
     }else if (rule2){
         username_msg_info.textContent = '✕ The only special characters allowed are: _ - . @ # $'
         username_msg_info.style.color = 'red'
-    }else if(!result.esist){
+    }else if(result.exist){
         username_msg_info.textContent = '✕ This username is alraedy used by someone else. Please choose another one'
         username_msg_info.style.color = 'red'   
     }
@@ -79,7 +79,7 @@ email.addEventListener('input', function(){
 
         const result = await response.json()
 
-        if (result.allowed && result.exist && rule1 && rule2){
+        if (result.allowed && !result.exist && rule1 && rule2){
         email_msg_info.textContent = '✓ This email is available and valid'
         email_msg_info.style.color = 'green'
         }else if (!result.allowed && !rule2){
@@ -87,7 +87,7 @@ email.addEventListener('input', function(){
         email_msg_info.style.color = 'red'
         }else if (!result.allowed && !rule1){
         email_msg_info.textContent = '✕ the email must look like this: example@doamain.com '
-        username_msg_info.style.color = 'red'
+        email_msg_info.style.color = 'red'
         }else if(result.esist){
         email_msg_info.textContent = '✕ This username is alraedy used by someone else. Please choose another one'
         email_msg_info.style.color = 'red'}
@@ -132,3 +132,63 @@ confirm_pswd_display.addEventListener('click', function() {
     confirm_pswd.type = TypeNew
     this.textContent = TypeNew === 'password'? '👁️':'🙈' 
 })
+
+function ValidForm(user_name, user_email, user_pswd, confirm_pswd){
+
+    if(!user_name.value && !user_email.value && !user_pswd.value && !confirm_pswd.value){
+        username_msg_info.textContent = '✕ Please enter a username to create your account'
+        email_msg_info.textContent = '✕ Please enter a email to create your account'
+        pswd_msg_info.textContent = '✕ Please enter a password to create your account'
+        confirm_pswd_msg_info.textContent = '✕ Please confirm your password to create your account'
+        username_msg_info.style.color = 'red'
+        email_msg_info.style.color = 'red'
+        pswd_msg_info.style.color = 'red'
+        confirm_pswd_msg_info.style.color = 'red'
+        return false
+    }else if(!user_email.value){
+        email_msg_info.textContent = '✕ Please enter a email to create your account'
+        email_msg_info.style.color = 'red'
+        return false
+    }else if(!user_pswd.value){
+        pswd_msg_info.textContent = '✕ Please enter a password to create your account'
+        pswd_msg_info.style.color = 'red'
+        return false
+    }else if(!confirm_pswd.value){
+        confirm_pswd_msg_info.textContent = '✕ Please confirm your password to create your account'
+        confirm_pswd_msg_info.style.color = 'red'
+        return false
+    }else if(!user_name.value){
+        username_msg_info.textContent = '✕ Please enter a username to create your account'
+        username_msg_info.style.color = 'red'
+        return false
+    }
+
+    return true 
+}
+
+async function signup(event){
+    event.preventDefault()
+
+    if(!ValidForm(username, email, pswd, confirm_pswd)){
+        return
+    }
+
+
+    const data = {
+        user_name : username.value,
+        user_email: email.value,
+        user_pswd: pswd.value
+    }
+
+    const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+
+    if (response.ok){
+        location.href = '/Signin'
+    };
+}
+
+form.addEventListener('submit', signup);

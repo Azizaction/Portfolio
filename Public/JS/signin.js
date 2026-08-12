@@ -48,7 +48,7 @@ function Valideform (user_pswd, user_email){
     return true
 }
 
-async function connexion (event){
+async function signin (event){
     event.preventDefault();
 
     
@@ -73,14 +73,8 @@ async function connexion (event){
         location.replace('/')
     }
     else if (response.status === 401){
-        const message = await response.json()
-        if (message.error === 'Wrong email'){
-            err.innerText = 'There\'s no user under this email'
-        }
-        if ( message.error === 'Wrong password'){
-            err.innerText = 'Wrong password'
-        }
+            err.innerText = 'The email address or the password are not valid, please try again'
     }
 }
 
-form.addEventListener( 'submit', connexion)
+form.addEventListener( 'submit', signin)
