@@ -6,15 +6,15 @@ export async function GetBannedWords(){
 }
 
 export async function AddBannedWords(bw_word){
-    const querie = connexion.run('INSERT INTO banned_words (bw_word) VALUES (?)', [bw_word])
+    const querie = await connexion.run('INSERT INTO banned_words (bw_word) VALUES (?)', [bw_word])
 }
 
 export async function VerifyUserName(username){
-    const querie = connexion.get('SELECT * FROM users WHERE name_user = ?', [username])
+    const querie = await connexion.get('SELECT * FROM users WHERE name_user = ?', [username])
     return querie
 }
 
 export async function VerifyUserEmail(user_email){
-    const querie = connexion.get('SELECT * FROM users WHERE email_user = ?', [user_email])
+    const querie = await connexion.get('SELECT * FROM users WHERE email_user = ?', [user_email])
     return querie    
 }

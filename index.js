@@ -116,7 +116,7 @@ app.post('/api/valid-username', UserNotConnected, async(request, response)=>{
     if(isValid && isExist){
         response.status(409).json({allowed: true, exist: true})
     }else if (!isValid ){
-        response.status(400).json({allowed: false, exiist: false})
+        response.status(400).json({allowed: false, exist: false})
     }else if(isValid && !isExist){
         response.status(200).json({allowed: true, exist: false})
     }else{
@@ -133,7 +133,7 @@ app.post('/api/valid-email', UserNotConnected, async(request, response)=>{
     if(isValid && isExist){
         response.status(409).json({allowed: true, exist: true})
     }else if (!isValid ){
-        response.status(400).json({allowed: false, exiist: false})
+        response.status(400).json({allowed: false, exist: false})
     }else if(isValid && !isExist){
         response.status(200).json({allowed: true, exist: false})
     }else{

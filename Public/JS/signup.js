@@ -9,6 +9,8 @@ const username_msg_info = document.getElementById('username-msg-info')
 const email_msg_info = document.getElementById('email-msg-info')
 const pswd_msg_info = document.getElementById('pswd-msg-info')
 const confirm_pswd_msg_info = document.getElementById('confirm-pswd-msg-info')
+const popup =  document.getElementById('user-verify-email')
+const popup_text = document.getElementById('popup-email-value')
 
 let UserNameTimer;
 let UserEmailTimer;
@@ -31,7 +33,7 @@ username.addEventListener('input', function(){
     const response = await fetch('/api/valid-username',{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username: username_value})
+        body: JSON.stringify({username: username.value})
     })
 
     const result = await response.json()
@@ -74,7 +76,7 @@ email.addEventListener('input', function(){
         const response = await fetch('/api/valid-email',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email: user_email})
+            body: JSON.stringify({email: email.value})
         })
 
         const result = await response.json()
@@ -88,8 +90,8 @@ email.addEventListener('input', function(){
         }else if (!result.allowed && !rule1){
         email_msg_info.textContent = '✕ the email must look like this: example@doamain.com '
         email_msg_info.style.color = 'red'
-        }else if(result.esist){
-        email_msg_info.textContent = '✕ This username is alraedy used by someone else. Please choose another one'
+        }else if(result.exist){
+        email_msg_info.textContent = '✕ This email is alraedy used by someone else. Please choose another one'
         email_msg_info.style.color = 'red'}
     }, 500)
 })
@@ -187,8 +189,9 @@ async function signup(event){
     });
 
     if (response.ok){
+        popup_text.textContent = email.value
         form.reset();
-        location.href = '/Signin'
+        popup.showModal()
     };
 
 }
