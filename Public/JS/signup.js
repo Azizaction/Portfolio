@@ -187,8 +187,10 @@ async function signup(event){
     });
 
     if (response.ok){
+        form.reset();
         location.href = '/Signin'
     };
+
 }
 
 form.addEventListener('submit', signup);

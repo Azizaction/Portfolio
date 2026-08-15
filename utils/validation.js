@@ -2,7 +2,7 @@
 
 export async function ValidEmail(user_email){
     function ValideEmailFormat(user_email){
-        const email_value = user_email.trim().toLowerCase()
+        const email_value = user_email.toLowerCase().trim()
 
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email_value)
     }

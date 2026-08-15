@@ -69,10 +69,14 @@ function UserNotConnected(request, response, next){
 }
 
 app.get('/', async (request, response) => {
+
+    const user = request.user
+
     response.render('home', {
         title: 'Home',
         style: ['CSS/style.css'], 
-        scripts: ['JS/home.js']
+        scripts: ['JS/home.js'],
+        user: user
     })
 
 })
@@ -160,6 +164,41 @@ app.post('/api/signup', UserNotConnected, async(request, response, next)=>{
     }else{
         response.status(400).end()
     }
+})
+
+app.post('/api/signin', UserNotConnected, async(request, response, next)=>{
+
+    const email = request.body.email_user
+    const pswd = request.body.password_user
+    const isValid = await ValidEmail(email) && await ValidPswd(pswd)
+
+    if(isValid){
+        passport.authenticate('local',(err, user, info)=>{
+            if(err){
+                next(err)
+            }else if(!user){
+                response.status(401).end()
+            }else{
+                request.logIn(user, (err) =>{
+                    if(err){
+                        next(err)
+                    }
+                    response.status(200).end()
+                })
+            }
+        })(request, response, next)
+    }else{
+        response.status(400).end()
+    }
+})
+
+app.post('/api/logout', UserConnected, async(request, response, next)=>{
+    request.logOut((err)=>{
+        if(err){
+            next(err)
+        }
+        response.redirect('/')
+    })
 })
 console.log('Server Ready.');
 console.log('http://localhost:' + process.env.PORT);

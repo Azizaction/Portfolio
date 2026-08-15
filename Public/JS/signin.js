@@ -70,7 +70,7 @@ async function signin (event){
     
 
     if (response.ok){
-        location.replace('/')
+        location.href = '/'
     }
     else if (response.status === 401){
             err.innerText = 'The email address or the password are not valid, please try again'

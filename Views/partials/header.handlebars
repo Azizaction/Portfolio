@@ -9,9 +9,16 @@
       <li><a href="/MyProjects">My Projects</a></li>
       <li><a href="/Contact">Contact</a></li>
     </ul>
+      {{#unless user}}
     <div class="sign-btn-header">
       <a href="/Signin">Sign in</a>
       <a href="/Signup">Sign up</a>
+    {{/unless}}
+      {{#if user}}
+      <form method="post" action="/api/logout">
+      <button type="submit">Logout</button>
+      </form>
+      {{/if}}
     </div>
   </nav>
 </header>

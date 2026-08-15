@@ -14,7 +14,7 @@ passport.use(new Strategy(config, async(email, password, done) => {
         if(!user){
             return done(null, false, {error: "Wrong Email"})
         }
-        const pswd = compare(password, user.user_password)
+        const pswd = compare(password, user.password_user)
         if(!pswd){
             return done(null, false, {error: "Wrong password"})
         }
@@ -26,7 +26,7 @@ passport.use(new Strategy(config, async(email, password, done) => {
 }))
 
 passport.serializeUser((user, done)=>{
-    return done(null, user.user_id)
+    return done(null, user.id_user)
 })
 
 passport.deserializeUser(async(Id, done)=>{
